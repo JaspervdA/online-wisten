@@ -1,1 +1,5 @@
-<h3>Welkom {{gameService.userName}} in kamer {{gameService.roomId}}</h3>
+<div *ngIf="!gameService.gameStarted">
+  <h3>Welkom {{gameService.userName}} in kamer {{gameService.roomId}}</h3>
+  <button (click)="gameService.startGame()">Start het spel!</button>
+</div>
+<app-board *ngIf="gameService.gameStarted"></app-board>

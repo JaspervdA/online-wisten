@@ -1,1 +1,7 @@
-<p>board works!</p>
+<div class="game-board">
+  <div class="my-cards">
+    <app-card *ngFor="let card of gameService.cards" [cardValue]="card"></app-card>
+  </div>
+  <p></p>
+  <div class="played-cards"></div>
+</div>

@@ -1,0 +1,22 @@
+@import 'src/styles';
+
+.game-card {
+  width: $card-width;
+  height: $card-height;
+  border: 2px solid $color-primary;
+  margin: $card-margin;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.card-type {
+  width: $card-width * 0.5;
+  height: $card-height * 0.5;
+}
+
+.card-number {
+  font-weight: bold;
+  font-size: 18px;
+}

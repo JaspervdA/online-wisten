@@ -1,0 +1,12 @@
+@import 'src/styles';
+
+.game-board {
+  width: $board-width;
+  height: $board-height;
+  border: 2px solid $color-primary;
+}
+
+.my-cards {
+  display: flex;
+  flex-wrap: wrap;
+}
