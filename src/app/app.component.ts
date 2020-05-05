@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GameBoardService } from './game-board/game-board.service';
 
 @Component({
   selector: 'app-root',
@@ -7,10 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'online-wisten';
-  gameJoined: boolean = false;
-  userName: string;
 
-  public joinRoom() {
-    this.gameJoined = true
-  }
+  constructor(public gameService: GameBoardService) {}
+
 }

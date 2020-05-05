@@ -1,8 +1,8 @@
-<div *ngIf="!gameJoined">
-  <h3>Kamer {{roomId}} is vrij!</h3>
+<div *ngIf="!gameService.gameJoined">
+  <h3>Kamer {{gameService.roomId}} is vrij!</h3>
   <p>Vul je naam in om mee te spelen</p>
-  <input type="text" [(ngModel)]="userName"/>
-  <button (click)="joinRoom()">Speel mee!</button>
+  <input type="text" [(ngModel)]="gameService.userName"/>
+  <button (click)="gameService.joinRoom()">Speel mee!</button>
 </div>
 
-<app-room *ngIf="gameJoined" [userName]="userName"></app-room>
+<app-room *ngIf="gameService.gameJoined"></app-room>

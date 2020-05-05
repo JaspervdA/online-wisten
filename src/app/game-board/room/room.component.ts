@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { GameBoardService } from '../game-board.service';
 
 @Component({
   selector: 'app-room',
@@ -6,10 +7,8 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./room.component.scss']
 })
 export class RoomComponent implements OnInit {
-  roomId: number = 1;
-  @Input() userName: string;
 
-  constructor() {}
+  constructor(public gameService: GameBoardService) {}
 
   ngOnInit() {}
 }
