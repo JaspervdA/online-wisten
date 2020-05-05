@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'online-wisten';
+  gameJoined: boolean = false;
+  userName: string;
+
+  public joinRoom() {
+    this.gameJoined = true
+  }
 }

@@ -1,1 +1,8 @@
-<h1> Online wisten is onder ontwikkeling!</h1>
+<div *ngIf="!gameJoined">
+  <h3>Kamer {{roomId}} is vrij!</h3>
+  <p>Vul je naam in om mee te spelen</p>
+  <input type="text" [(ngModel)]="userName"/>
+  <button (click)="joinRoom()">Speel mee!</button>
+</div>
+
+<app-room *ngIf="gameJoined" [userName]="userName"></app-room>
