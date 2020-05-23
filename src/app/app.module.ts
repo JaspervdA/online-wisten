@@ -13,7 +13,16 @@ import { AngularFireDatabase } from 'angularfire2/database';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [AngularFireModule.initializeApp(environment.firebaseConfig, 'online-wisten'), BrowserModule, FormsModule, GameBoardModule, AppRoutingModule],
+  imports: [
+    AngularFireModule.initializeApp(
+      environment.firebaseConfig,
+      'online-wisten'
+    ),
+    BrowserModule,
+    FormsModule,
+    GameBoardModule,
+    AppRoutingModule
+  ],
   providers: [AngularFireDatabase],
   bootstrap: [AppComponent]
 })

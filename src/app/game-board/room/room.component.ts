@@ -7,10 +7,14 @@ import { GameBoardService } from '../game-board.service';
   styleUrls: ['./room.component.scss']
 })
 export class RoomComponent implements OnInit {
+  public usernameInput: string;
 
   constructor(public gameService: GameBoardService) {}
 
-  ngOnInit() {
-    this.gameService.checkGames()
+  ngOnInit() {}
+
+  public addPlayer() {
+    this.gameService.addPlayerToRoom(this.usernameInput);
+    this.gameService.checkIfGameStarted()
   }
 }

@@ -1,8 +1,15 @@
-<div *ngIf="!gameService.gameJoined">
-  <h3>Kamer {{gameService.roomId}} is vrij!</h3>
-  <p>Vul je naam in om mee te spelen</p>
-  <input type="text" [(ngModel)]="gameService.userName"/>
-  <button (click)="gameService.joinRoom()">Speel mee!</button>
+<div *ngIf="gameService.loadingRoom">
+  <h3>De kamer wordt geladen...</h3>
+</div>
+
+<div *ngIf="!gameService.gameJoined && !gameService.loadingRoom">
+  <h3>Welkom bij online-wisten!</h3>
+  <p>Maak een nieuw spel aan</p>
+  <input type='text' placeholder='Vul hier de spelnaam in' [(ngModel)]='gameService.roomName'/>
+  <button (click)="gameService.createRoom()">Nieuw prive spel</button>
+  <p>Of doe mee met een spel</p>
+  <input type='text' placeholder='Vul hier de spelcode in' [(ngModel)]='gameIdInput'/>
+  <button (click)="joinRoom()">Speel mee</button>
 </div>
 
 <app-room *ngIf="gameService.gameJoined"></app-room>

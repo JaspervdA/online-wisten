@@ -1,5 +1,16 @@
-<div *ngIf="!gameService.gameStarted">
-  <h3>Welkom {{gameService.userName}} in kamer {{gameService.roomId}}</h3>
-  <button (click)="gameService.startGame()">Start het spel!</button>
+<div *ngIf='!gameService.gameStarted'>
+  <div *ngIf="!gameService.userName">
+    <h3>Welkom in kamer {{gameService.roomName}}, vul je naam in om mee te doen.</h3>
+    <input type="text" [(ngModel)]="usernameInput"/>
+    <button (click)="addPlayer()">Speel mee!</button>
+  </div>
+  <div>
+    <p>De volgende spelers zijn al in de kamer. Wanneer een vierde speler meespeelt start het spel automatisch</p>
+    <div class="lobby">
+      <p *ngFor="let player of gameService.players | async">{{player.name}}</p>
+    </div>
+    <h3>Nodig direct vrienden nieuwe uit met de volgende link {{'https://online-wisten.web.app/'+gameService.roomId}}</h3>
+  </div>
 </div>
+
 <app-board *ngIf="gameService.gameStarted"></app-board>
