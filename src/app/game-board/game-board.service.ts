@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList } from "angularfire2/database";
+import {Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,20 @@ export class GameBoardService {
   userName: string;
   roomId: number = 1;
   cards: number[];
+  public games: Observable<any>;
+  public gamesRef: AngularFireList<any>
 
-  constructor(private af: AngularFireDatabase) {}
+  constructor(private db: AngularFireDatabase) {
+    this.gamesRef = db.list('/games');
+    this.games = this.gamesRef.valueChanges();
+  }
+
+  public checkGames(){
+    this.games.subscribe( games => console.log(games))
+  }
 
   public joinRoom() {
     this.gameJoined = true;
-    // console.log(this.af.list('/').update('hello world'));
   }
 
   public startGame() {

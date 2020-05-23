@@ -10,5 +10,7 @@ export class RoomComponent implements OnInit {
 
   constructor(public gameService: GameBoardService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.gameService.checkGames()
+  }
 }
