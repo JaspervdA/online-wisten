@@ -1,4 +1,8 @@
-<div class="game-card" [ngClass]="cardValue > -1 ? 'null' : 'hide-card'">
+<div
+  class="game-card"
+  [ngClass]="cardValue > -1 ? 'null' : 'hide-card'"
+  (click)="clickCard()"
+>
   <img class="card-type" [src]="cardTypes[cardType]">
   <div class="card-number">{{cardNumber}}</div>
 </div>

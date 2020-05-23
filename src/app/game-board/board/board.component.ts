@@ -25,7 +25,7 @@ export class BoardComponent implements OnInit {
   }
 
   private initPlayerPositions() {
-    let myIndex: number = this.gameService.bottomPlayerIndex;
+    let myIndex: number = this.gameService.myPlayerIndex;
     this.bottomPlayer = this.gameService.staticPlayers[myIndex].name;
     this.leftPlayer = this.gameService.staticPlayers[(myIndex + 1) % 4].name;
     this.topPlayer = this.gameService.staticPlayers[(myIndex + 2) % 4].name;
@@ -34,7 +34,7 @@ export class BoardComponent implements OnInit {
 
   public getPlayedCardClass(playerIndex: number): string {
     const styleIndex =
-      (playerIndex - this.gameService.bottomPlayerIndex + 4) % 4;
+      (playerIndex - this.gameService.myPlayerIndex + 4) % 4;
     return this.playedCardClasses[styleIndex];
   }
 }

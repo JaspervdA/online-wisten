@@ -12,15 +12,17 @@
     <p>{{bottomPlayer}}</p>
     <div class="my-cards">
       <app-card
-        *ngFor="let card of gameService.cards | async"
+        *ngFor="let card of gameService.cards | async; let idx = index"
         [cardValue]="card"
+        [firebaseIndex]="idx"
+        [clickable]="true"
       >
       </app-card>
     </div>
   </div>
   <div class="played-cards">
     <app-card
-      *ngFor="let card of gameService.playedCards; let idx = index"
+      *ngFor="let card of (gameService.playedCards | async); let idx = index"
       [cardValue]="card"
       [ngClass]="getPlayedCardClass(idx)"
     >

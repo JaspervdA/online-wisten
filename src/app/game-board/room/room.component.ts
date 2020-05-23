@@ -13,7 +13,14 @@ export class RoomComponent implements OnInit {
 
   ngOnInit() {
     // Remove this line later, meant for testing
-    // this.gameService.startNewGame(this.gameService.staticPlayers);
+    this.gameService.staticPlayers = [
+      { name: 'Jasper', id: 'ETX1H65X01EG' },
+      { name: 'Ellissa', id: 'kNIMFD8yBCi6' },
+      { name: 'Opa', id: '8L3cw4OXtASy' },
+      { name: 'Oma', id: 'ZSnMNYck9X2n' }
+    ];
+    this.gameService.playerId = 'ETX1H65X01EG';
+    this.gameService.startNewGame(this.gameService.staticPlayers);
   }
 
   public addPlayer() {

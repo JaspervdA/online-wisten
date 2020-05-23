@@ -12,14 +12,10 @@ export interface Player {
   id: string;
 }
 
-export interface Round {
-  winnerId: number;
-  playedCards: number[];
-}
-
 export interface Game {
   id: number;
   trumpColor: number;
-  rounds: Round[];
   cards: number[][];
+  playedCards: number[][];
+  winnerId: number[];
 }

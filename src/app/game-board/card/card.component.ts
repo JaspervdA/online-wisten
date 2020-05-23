@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { GameBoardService } from '../game-board.service';
 
 @Component({
   selector: 'app-card',
@@ -7,6 +8,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CardComponent implements OnInit {
   @Input() cardValue: number;
+  @Input() clickable: boolean = false;
+  @Input() firebaseIndex: number;
   cardNumber: string;
   cardType: number;
   specialCards: { number: number; replaceWith: string }[] = [
@@ -23,7 +26,7 @@ export class CardComponent implements OnInit {
     '/assets/images/spades.png'
   ];
 
-  constructor() {}
+  constructor(public gameService: GameBoardService) {}
 
   ngOnInit() {
     this.getCardTypeAndNumber();
@@ -39,5 +42,11 @@ export class CardComponent implements OnInit {
         this.cardNumber = specialCard.replaceWith;
       }
     });
+  }
+
+  public clickCard() {
+    if (this.clickable) {
+      this.gameService.playCard(this.cardValue, this.firebaseIndex);
+    }
   }
 }

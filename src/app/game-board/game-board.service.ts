@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
-import { Game, Player, Room, Round } from './game-board.interface';
+import { Game, Player, Room } from './game-board.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +16,16 @@ export class GameBoardService {
   public cards: Observable<number[]>;
   public gamesRef: AngularFireList<Game>;
   public games: Observable<Game[]>;
-  public gameId: number = 0;
   public playersRef: AngularFireList<Player>;
   public players: Observable<Player[]>;
   public staticPlayers: Player[];
   public userName: string;
   public playerId: string;
-  public bottomPlayerIndex: number;
-  public playedCards: number[];
+  public myPlayerIndex: number;
+  public playedCards: Observable<number[]>;
+  private cardPlayed: boolean = false;
+  public gameId: number = 0;
+  public roundId: number = 0;
 
   constructor(private db: AngularFireDatabase) {}
 
@@ -98,23 +100,60 @@ export class GameBoardService {
     // Find the index of the active player
     players.forEach((player, index) => {
       if (this.playerId === player.id) {
-        this.bottomPlayerIndex = index;
+        this.myPlayerIndex = index;
       }
     });
   }
   private checkIfCardsChanged() {
     this.games.subscribe((games: Game[]) => {
-      this.getCardsObservable();
+      if (!this.cards) {
+        this.getCardsObservable();
+      }
       this.gameStarted = true;
     });
   }
 
+  public playCard(cardValue: number, firebaseIndex: number) {
+    if (this.cardPlayed === true) {
+      return;
+    } else {
+      this.db.database
+        .ref(
+          `rooms/${this.roomId}/games/${this.gameId}/playedCards/${
+            this.roundId
+          }/${this.myPlayerIndex}`
+        )
+        .set(cardValue)
+        .then(response => (this.cardPlayed = true));
+
+      this.db.database
+        .ref(
+          `rooms/${this.roomId}/games/${this.gameId}/cards/${
+            this.myPlayerIndex
+          }/${firebaseIndex}`
+        )
+        .remove();
+    }
+  }
+
+  private newRound() {
+    this.cardPlayed = false;
+    this.roundId += 1;
+  }
+
   private getCardsObservable() {
-    let index$ = new BehaviorSubject(this.gameId);
+    let gameIndex$ = new BehaviorSubject(this.gameId);
+    let roundIndex$ = new BehaviorSubject(this.roundId);
     this.cards = combineLatest(
-      index$,
+      gameIndex$,
       this.games,
-      (index, arr) => arr[index].cards[this.bottomPlayerIndex]
+      (gameIndex, arr) => arr[gameIndex].cards[this.myPlayerIndex]
+    );
+    this.playedCards = combineLatest(
+      gameIndex$,
+      roundIndex$,
+      this.games,
+      (gameIndex, roundIndex, arr) => arr[gameIndex].playedCards[roundIndex]
     );
   }
 
@@ -138,7 +177,8 @@ export class GameBoardService {
 
   private uploadCards() {
     const newGame = {
-      cards: this.tempCards
+      cards: this.tempCards,
+      playedCards: this.initialisePlayedCards()
     } as Game;
 
     this.db.database
@@ -162,5 +202,14 @@ export class GameBoardService {
       id += characters.charAt(Math.floor(Math.random() * characters.length));
     }
     return id;
+  }
+
+  private initialisePlayedCards() {
+    let playedRound: number[] = new Array(4).fill(-1);
+    let playedCards: number[][] = [];
+    for (let i = 0; i < 13; i++) {
+      playedCards.push(playedRound);
+    }
+    return playedCards;
   }
 }
