@@ -1,12 +1,97 @@
 @import 'src/styles';
 
 .game-board {
+  position: relative;
   width: $board-width;
   height: $board-height;
   border: 2px solid $color-primary;
 }
 
+.player {
+  position: absolute;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bottom-player {
+  @extend .player;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  margin: 15px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.left-player {
+  @extend .player;
+  left: 0;
+  top: 40%;
+  margin: 0 15px;
+}
+
+.top-player {
+  @extend .player;
+  width: 100%;
+  top: 0;
+  margin: 15px 0;
+}
+
+.right-player {
+  @extend .player;
+  right: 0;
+  top: 40%;
+  margin: 0 15px;
+}
+
 .my-cards {
   display: flex;
   flex-wrap: wrap;
+}
+
+.played-cards {
+  position: absolute;
+  top: 15%;
+  right: 20%;
+  left: 20%;
+  bottom: 30%;
+}
+
+.played-card {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.played-card-left {
+  @extend .played-card;
+  left: 0;
+  top: 20%;
+  bottom: 20%;
+}
+
+.played-card-top {
+  @extend .played-card;
+  left: 20%;
+  top: 0;
+  right: 20%;
+}
+
+.played-card-right {
+  @extend .played-card;
+  right: 0;
+  top: 20%;
+  bottom: 20%;
+}
+
+.played-card-bottom {
+  @extend .played-card;
+  right: 20%;
+  bottom: 0;
+  left: 20%;
 }

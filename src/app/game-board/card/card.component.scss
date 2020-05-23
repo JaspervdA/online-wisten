@@ -12,11 +12,15 @@
 }
 
 .card-type {
-  width: $card-width * 0.5;
-  height: $card-height * 0.5;
+  width: $card-width * 0.6;
+  height: $card-height * 0.6;
 }
 
 .card-number {
   font-weight: bold;
-  font-size: 18px;
+  font-size: 32px;
+}
+
+.hide-card {
+  display: none;
 }

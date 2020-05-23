@@ -18,9 +18,15 @@ export class GameBoardService {
 
   public playersRef: AngularFireList<Player>;
   public players: Observable<Player[]>;
+  public staticPlayers: Player[] = [
+    { name: 'Jasper', id: 'a' },
+    { name: 'Ellissa', id: 'a' },
+    { name: 'Elwin', id: 'a' },
+    { name: 'Wiepke', id: 'a' }
+  ];
   public userName: string;
   private playerId: string;
-  // public players: Player[] = [{ name: 'Jasper' }, { name: 'Ellissa' }];
+  public playedCards: number[];
 
   constructor(private db: AngularFireDatabase) {}
 
@@ -62,7 +68,9 @@ export class GameBoardService {
 
   public checkIfGameStarted() {
     this.players.subscribe((players: Player[]) => {
-      players.length === 4 ? (this.gameStarted = true) : console.log(players);
+      players.length === 4
+        ? ((this.gameStarted = true), (this.staticPlayers = players))
+        : console.log(players);
     });
   }
 
@@ -71,7 +79,7 @@ export class GameBoardService {
   }
 
   public getCards() {
-    this.cards = Array.from(Array(52).keys());
+    this.cards = Array.from(Array(13).keys());
   }
 
   public checkIfValidRoomId(roomId: string) {

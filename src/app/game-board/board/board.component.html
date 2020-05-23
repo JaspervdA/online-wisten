@@ -1,7 +1,26 @@
 <div class="game-board">
-  <div class="my-cards">
-    <app-card *ngFor="let card of gameService.cards" [cardValue]="card"></app-card>
+  <div class="left-player">
+    {{leftPlayer}}
   </div>
-  <p></p>
-  <div class="played-cards"></div>
+  <div class="top-player">
+    {{topPlayer}}
+  </div>
+  <div class="right-player">
+    {{rightPlayer}}
+  </div>
+  <div class="bottom-player">
+    <p>{{this.gameService.userName}}</p>
+    <div class="my-cards">
+      <app-card *ngFor="let card of gameService.cards" [cardValue]="card">
+      </app-card>
+    </div>
+  </div>
+  <div class="played-cards">
+    <app-card
+      *ngFor="let card of gameService.playedCards; let idx = index"
+      [cardValue]="card"
+      [ngClass]="getPlayedCardClass(idx)"
+    >
+    </app-card>
+  </div>
 </div>
