@@ -10,22 +10,10 @@ export class CardComponent implements OnInit {
   cardNumber: string;
   cardType: number;
   specialCards: { number: number; replaceWith: string }[] = [
-    {
-      number: 10,
-      replaceWith: 'J'
-    },
-    {
-      number: 11,
-      replaceWith: 'Q'
-    },
-    {
-      number: 12,
-      replaceWith: 'K'
-    },
-    {
-      number: 13,
-      replaceWith: 'A'
-    }
+    { number: 11, replaceWith: 'J' },
+    { number: 12, replaceWith: 'Q' },
+    { number: 13, replaceWith: 'K' },
+    { number: 14, replaceWith: 'A' }
   ];
   deckSize: number = 13;
   cardTypes: string[] = [
@@ -42,7 +30,7 @@ export class CardComponent implements OnInit {
   }
 
   private getCardTypeAndNumber() {
-    const cardIndex = 1 + this.cardValue % this.deckSize;
+    const cardIndex = 2 + this.cardValue % this.deckSize;
     this.cardType = Math.floor(this.cardValue / this.deckSize);
 
     this.cardNumber = String(cardIndex);

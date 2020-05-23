@@ -9,9 +9,12 @@
     {{rightPlayer}}
   </div>
   <div class="bottom-player">
-    <p>{{this.gameService.userName}}</p>
+    <p>{{bottomPlayer}}</p>
     <div class="my-cards">
-      <app-card *ngFor="let card of gameService.cards" [cardValue]="card">
+      <app-card
+        *ngFor="let card of gameService.cards | async"
+        [cardValue]="card"
+      >
       </app-card>
     </div>
   </div>

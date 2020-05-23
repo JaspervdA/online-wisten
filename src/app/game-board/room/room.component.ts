@@ -11,10 +11,13 @@ export class RoomComponent implements OnInit {
 
   constructor(public gameService: GameBoardService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    // Remove this line later, meant for testing
+    // this.gameService.startNewGame(this.gameService.staticPlayers);
+  }
 
   public addPlayer() {
     this.gameService.addPlayerToRoom(this.usernameInput);
-    this.gameService.checkIfGameStarted()
+    this.gameService.checkIfGameStarted();
   }
 }
