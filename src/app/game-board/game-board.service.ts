@@ -106,10 +106,8 @@ export class GameBoardService {
   }
   private checkIfCardsChanged() {
     this.games.subscribe((games: Game[]) => {
-      if (!this.cards) {
-        this.getCardsObservable();
-      }
-      this.gameStarted = true;
+      console.log(games)
+      this.getCardsObservable(games);
     });
   }
 
@@ -141,7 +139,26 @@ export class GameBoardService {
     this.roundId += 1;
   }
 
-  private getCardsObservable() {
+  private getCardsObservable(games: Game[]) {
+    // Return if the observable already exists
+    if (this.cards) {
+      return;
+    }
+    // 
+    // // Return if there are no cards in the database yet
+    // if (!games[this.gameId].cards || !games[this.gameId].playedCards) {
+    //   return;
+    // }
+    //
+    // // Return if the specific cards are not in the database yet
+    // if (
+    //   !games[this.gameId].cards[this.myPlayerIndex] ||
+    //   !games[this.gameId].playedCards[this.roundId]
+    // ) {
+    //   return;
+    // }
+
+    this.gameStarted = true;
     let gameIndex$ = new BehaviorSubject(this.gameId);
     let roundIndex$ = new BehaviorSubject(this.roundId);
     this.cards = combineLatest(
