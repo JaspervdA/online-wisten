@@ -27,5 +27,8 @@
       [ngClass]="getPlayedCardClass(idx)"
     >
     </app-card>
+    <div class="new-round" *ngIf="gameService.startingNewRound">
+      <button (click)="gameService.startNewRound()">Volgende slag</button>
+    </div>
   </div>
 </div>

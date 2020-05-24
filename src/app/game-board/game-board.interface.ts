@@ -17,5 +17,6 @@ export interface Game {
   trumpColor: number;
   cards: number[][];
   playedCards: number[][];
-  winnerId: number[];
+  winners: number[];
+  activeRound: number;
 }

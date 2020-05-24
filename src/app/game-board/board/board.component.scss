@@ -95,3 +95,11 @@
   bottom: 0;
   left: 20%;
 }
+
+.new-round {
+  @extend .played-card;
+  right: 20%;
+  bottom: 20%;
+  left: 20%;
+  top: 20%;
+}
