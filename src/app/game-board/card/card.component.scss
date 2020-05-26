@@ -5,10 +5,13 @@
   height: $card-height;
   border: 2px solid $color-primary;
   margin: $card-margin;
+  background-color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  color: $color-primary;
+  background-color: $color-secondary;
 }
 
 .card-type {

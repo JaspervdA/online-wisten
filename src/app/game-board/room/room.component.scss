@@ -3,3 +3,16 @@
 .lobby {
   border: 2px solid $color-primary;
 }
+
+.room-card {
+  max-width: 800px;
+  margin: 0 auto;
+  position: absolute;
+  top: 20%;
+  left: 30%;
+  right: 30%;
+}
+
+.lobby-name {
+  margin-left: 5px;
+}

@@ -329,9 +329,19 @@ export class GameBoardService {
     this.shuffleArray(allCards);
     let cards: number[][] = [];
     for (let i = 0; i < 4; i++) {
-      cards.push(allCards.splice(0, 13));
+      // Get the players cards and sort them to have an intuitive deck
+      cards.push(
+        allCards
+          .splice(0, 13)
+          .sort(this.sortAscending)
+          .reverse()
+      );
     }
     return cards;
+  }
+
+  private sortAscending(a: number, b: number) {
+    return a - b;
   }
 
   private initialiseWinners(): number[] {

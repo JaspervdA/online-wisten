@@ -4,10 +4,10 @@
   position: relative;
   width: $board-width;
   height: $board-height;
-  border: 2px solid $color-primary;
 }
 
 .player {
+  color: $color-secondary;
   position: absolute;
   font-size: 32px;
   display: flex;

@@ -1,21 +1,30 @@
-<div *ngIf='!gameService.gameStarted'>
-  <div *ngIf="!gameService.userName">
-    <h3>Welkom in kamer {{gameService.roomName}}, vul je naam in om mee te doen.</h3>
-    <input type="text" [(ngModel)]="usernameInput"/>
-    <button (click)="addPlayer()">Speel mee!</button>
-  </div>
-  <div>
-    <p>De volgende spelers zijn al in de kamer. Wanneer een vierde speler meespeelt start het spel automatisch</p>
-    <div class="lobby">
-      <p *ngFor="let player of gameService.players | async">{{player.name}}</p>
+<mat-card class="room-card" *ngIf='!gameService.gameStarted'>
+    <div *ngIf="!gameService.userName">
+      <h1>Welkom in kamer {{gameService.roomName}}</h1>
+      <p>Vul je naam in om mee te doen.</p>
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Bijv. Jan" [(ngModel)]="usernameInput">
+      </mat-form-field>
+      <button class="button-green" mat-raised-button color="primary" (click)="addPlayer()">SPEEL MEE!</button>
     </div>
-    <h3>
-      Nodig direct vrienden nieuwe uit met de volgende link
-      {{'https://online-wisten.web.app/'+gameService.roomId}}
-      of deel de spelcode {{gameService.roomId}}
-     </h3>
-  </div>
-</div>
+    <div>
+      <p>De volgende spelers zijn al in de kamer. Wanneer een vierde speler meespeelt start het spel automatisch</p>
+      <div class="lobby">
+        <p *ngFor="let player of gameService.players | async" class="lobby-name">{{player.name}}</p>
+      </div>
+      <h3>
+        Nodig direct vrienden nieuwe uit met deze link
+      </h3>
+      <h3>
+        <span class="color-green">{{'online-wisten.web.app/'+gameService.roomId}}</span>
+      </h3>
+      <button class="button-green" mat-raised-button color="primary" (click)="copyLink()">KOPIEER LINK</button>
+      <h3>
+          of deel de spelcode <span class="color-green">{{gameService.roomId}}</span>
+      </h3>
+      <button class="button-green" mat-raised-button color="primary" (click)="copyCode()">KOPIEER spelcode</button>
+    </div>
+</mat-card>
 
 <app-board *ngIf="gameService.gameStarted"></app-board>
 

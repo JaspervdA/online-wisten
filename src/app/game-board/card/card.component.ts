@@ -20,10 +20,10 @@ export class CardComponent implements OnInit {
   ];
   deckSize: number = 13;
   cardTypes: string[] = [
-    '/assets/images/hearts.png',
-    '/assets/images/diamonds.png',
     '/assets/images/clubs.png',
-    '/assets/images/spades.png'
+    '/assets/images/diamonds.png',
+    '/assets/images/spades.png',
+    '/assets/images/hearts.png'
   ];
 
   constructor(public gameService: GameBoardService) {}

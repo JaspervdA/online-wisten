@@ -1,11 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
 
-$color-primary: #333;
-$color-secondary: #eee;
+$color-primary: #000;
+$color-secondary: #fff;
+$color-accent: green;
 
-$board-width: 1200px;
-$board-height: 800px;
+$board-width: 100vw;
+$board-height: 100vh;
 
 $card-width: 70px;
 $card-height: 100px;
 $card-margin: 5px;
+
+.body {
+  background-color: $color-accent;
+  margin: 0;
+}
+
+.button-green {
+  background-color: green !important;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.color-green {
+  color: green;
+}

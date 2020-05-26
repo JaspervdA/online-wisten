@@ -1,15 +1,21 @@
-<div *ngIf="gameService.loadingRoom">
-  <h3>De kamer wordt geladen...</h3>
-</div>
+<mat-card class="welcome-card" *ngIf="gameService.loadingRoom">
+  <h1>De kamer wordt geladen... </h1>
+  <mat-spinner ></mat-spinner>
+</mat-card>
 
-<div *ngIf="!gameService.gameJoined && !gameService.loadingRoom">
-  <h3>Welkom bij online-wisten!</h3>
-  <p>Maak een nieuw spel aan</p>
-  <input type='text' placeholder='Vul hier de spelnaam in' [(ngModel)]='gameService.roomName'/>
-  <button (click)="gameService.createRoom()">Nieuw prive spel</button>
-  <p>Of doe mee met een spel</p>
-  <input type='text' placeholder='Vul hier de spelcode in' [(ngModel)]='gameIdInput'/>
-  <button (click)="joinRoom()">Speel mee</button>
-</div>
+<mat-card class="welcome-card" *ngIf="!gameService.gameJoined && !gameService.loadingRoom">
+  <h1>Welkom bij online-wisten!</h1>
+  <p>Maak een nieuwe spelkamer aan</p>
+  <mat-form-field class="full-width">
+    <input matInput placeholder="Vul de spelkamer naam in" [(ngModel)]='gameService.roomName'>
+  </mat-form-field>
+  <button class="button-green" mat-raised-button color="primary" (click)="gameService.createRoom()">START NIEUW SPEL</button>
+
+  <p>Of doe mee met een bestaand spel</p>
+  <mat-form-field class="full-width">
+    <input matInput placeholder="Vul hier de spelcode in" [(ngModel)]='gameIdInput'>
+  </mat-form-field>
+  <button class="button-green" mat-raised-button color="primary" (click)="joinRoom()">SPEEL MEE</button>
+</mat-card>
 
 <app-room *ngIf="gameService.gameJoined"></app-room>
