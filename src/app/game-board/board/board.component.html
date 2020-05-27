@@ -29,10 +29,10 @@
     </app-card>
     <mat-card class="room-card" *ngIf="gameService.trumpColor === -1">
       <h2>Wat is de troefkaart?</h2>
-      <button class="button-green" mat-raised-button color="primary" (click)="gameService.setTrumpCard(0)">Harten</button>
-      <button class="button-green" mat-raised-button color="primary" (click)="gameService.setTrumpCard(1)">Ruiten</button>
-      <button class="button-green" mat-raised-button color="primary" (click)="gameService.setTrumpCard(2)">Schoppen</button>
-      <button class="button-green" mat-raised-button color="primary" (click)="gameService.setTrumpCard(3)">Klaveren</button>
+      <button class="button-green trump-button" mat-raised-button color="primary" (click)="gameService.setTrumpCard(3)">Harten</button>
+      <button class="button-green trump-button" mat-raised-button color="primary" (click)="gameService.setTrumpCard(2)">Schoppen</button>
+      <button class="button-green trump-button" mat-raised-button color="primary" (click)="gameService.setTrumpCard(1)">Ruiten</button>
+      <button class="button-green trump-button" mat-raised-button color="primary" (click)="gameService.setTrumpCard(0)">Klaveren</button>
     </mat-card>
     <div class="new-round" *ngIf="gameService.startingNewRound">
       <button class="button-green" mat-raised-button color="primary" (click)="gameService.startNewRound()">VOLGENDE SLAG</button>

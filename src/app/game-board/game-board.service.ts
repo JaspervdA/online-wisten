@@ -165,11 +165,13 @@ export class GameBoardService {
       this.gameId += 1;
       this.roundId = 0;
       this.startingNewRound = false;
+      this.cardPlayed = false;
       this.gameStarted = false;
       this.startNewGame();
     } else if (databaseActiveRound > this.roundId) {
       this.roundId += 1;
       this.startingNewRound = false;
+      this.cardPlayed = false;
       this.getPlayedCardsObservable();
     }
   }
@@ -189,7 +191,7 @@ export class GameBoardService {
     }
 
     this.startingNewRound = true;
-    this.cardPlayed = false;
+
     // The first player computes and submits the winner
     if (this.playerId === this.staticPlayers[0].id) {
       this.computeWinner(this.roundId, playedCards);
@@ -208,6 +210,7 @@ export class GameBoardService {
       } else if (databaseActiveRound === this.roundId) {
         this.roundId += 1;
         this.startingNewRound = false;
+        this.cardPlayed = false;
         // @ts-ignore
         this.gamesRef.set(`${this.gameId}/activeRound`, this.roundId);
         this.getPlayedCardsObservable();

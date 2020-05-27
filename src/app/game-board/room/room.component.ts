@@ -29,7 +29,7 @@ export class RoomComponent implements OnInit {
   }
 
   public copyLink(){
-    const link = `online-wisten.web.app/${this.gameService.roomId}`;
+    const link = `https://online-wisten.web.app/${this.gameService.roomId}`;
     this.copyText(link)
   }
 
