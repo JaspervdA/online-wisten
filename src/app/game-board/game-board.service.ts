@@ -35,6 +35,7 @@ export class GameBoardService {
   private cardPlayed: boolean = false;
   public gameId: number = 0;
   public roundId: number = 0;
+  public trumpColor: number = -1;
 
   constructor(private db: AngularFireDatabase) {}
 
@@ -121,6 +122,9 @@ export class GameBoardService {
   private checkIfGamesChanged() {
     this.games.subscribe((games: Game[]) => {
       if (this.gameStarted) {
+        if (this.trumpColor === -1) {
+          this.checkIfTrumpCardHasBeenDeclared(games);
+        }
         if (this.startingNewRound) {
           this.checkIfNewRoundHasStarted(games);
         } else {
@@ -170,6 +174,14 @@ export class GameBoardService {
     }
   }
 
+  private checkIfTrumpCardHasBeenDeclared(games: Game[]) {
+    const databaseActiveTrumpColor: number = games[this.gameId].trumpColor;
+
+    if (databaseActiveTrumpColor > -1) {
+      this.trumpColor = databaseActiveTrumpColor;
+    }
+  }
+
   private endRound(playedCards: number[]) {
     // A second function call, return
     if (this.startingNewRound) {
@@ -199,6 +211,20 @@ export class GameBoardService {
         // @ts-ignore
         this.gamesRef.set(`${this.gameId}/activeRound`, this.roundId);
         this.getPlayedCardsObservable();
+      }
+    });
+  }
+
+  public setTrumpCard(trumpColor: number) {
+    // The player that clicks the button starts the new round
+    this.games.pipe(take(1)).subscribe((games: Game[]) => {
+      const databaseTrumpColor: number = games[this.gameId].trumpColor;
+      console.log(databaseTrumpColor);
+
+      if (databaseTrumpColor === -1) {
+        this.trumpColor = trumpColor;
+        // @ts-ignore
+        this.gamesRef.set(`${this.gameId}/trumpColor`, trumpColor);
       }
     });
   }
@@ -254,13 +280,13 @@ export class GameBoardService {
     playedCards: number[],
     startingPlayer: number
   ) {
-    let trumpColor: number = 0;
+    // let trumpColor: number = 0;
     let startingColor: number;
     let cardStrengths: number[];
 
     startingColor = Math.floor(playedCards[startingPlayer] / 13);
     cardStrengths = playedCards.map((cardValue: number) => {
-      return this.getCardStrength(cardValue, trumpColor, startingColor);
+      return this.getCardStrength(cardValue, this.trumpColor, startingColor);
     });
 
     this.winnersRef.set(`${roundId}`, this.indexOfMax(cardStrengths));
@@ -289,7 +315,8 @@ export class GameBoardService {
       cards: this.initialiseCards(),
       playedCards: this.initialisePlayedCards(),
       winners: this.initialiseWinners(),
-      activeRound: 0
+      activeRound: 0,
+      trumpColor: -1
     } as Game;
 
     this.db.database

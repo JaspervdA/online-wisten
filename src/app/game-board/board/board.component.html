@@ -1,15 +1,15 @@
 <div class="game-board">
   <div class="left-player">
-    {{leftPlayer}} - {{(leftPlayerWins | async).length}}
+    {{leftPlayer}} - {{(leftPlayerWins | async)?.length}}
   </div>
   <div class="top-player">
-    {{topPlayer}} - {{(topPlayerWins | async).length}}
+    {{topPlayer}} - {{(topPlayerWins | async)?.length}}
   </div>
   <div class="right-player">
-    {{rightPlayer}} - {{(rightPlayerWins | async).length}}
+    {{rightPlayer}} - {{(rightPlayerWins | async)?.length}}
   </div>
   <div class="bottom-player">
-    <p>{{bottomPlayer}} - {{(bottomPlayerWins | async).length}}</p>
+    <p>{{bottomPlayer}} - {{(bottomPlayerWins | async)?.length}}</p>
     <div class="my-cards">
       <app-card
         *ngFor="let card of gameService.cards | async; let idx = index"
@@ -27,8 +27,15 @@
       [ngClass]="getPlayedCardClass(idx)"
     >
     </app-card>
+    <mat-card class="room-card" *ngIf="gameService.trumpColor === -1">
+      <h2>Wat is de troefkaart?</h2>
+      <button class="button-green" mat-raised-button color="primary" (click)="gameService.setTrumpCard(0)">Harten</button>
+      <button class="button-green" mat-raised-button color="primary" (click)="gameService.setTrumpCard(1)">Ruiten</button>
+      <button class="button-green" mat-raised-button color="primary" (click)="gameService.setTrumpCard(2)">Schoppen</button>
+      <button class="button-green" mat-raised-button color="primary" (click)="gameService.setTrumpCard(3)">Klaveren</button>
+    </mat-card>
     <div class="new-round" *ngIf="gameService.startingNewRound">
-      <button (click)="gameService.startNewRound()">Volgende slag</button>
+      <button class="button-green" mat-raised-button color="primary" (click)="gameService.startNewRound()">VOLGENDE SLAG</button>
     </div>
   </div>
 </div>
