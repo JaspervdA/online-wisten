@@ -13,7 +13,7 @@
         <p *ngFor="let player of gameService.players | async" class="lobby-name">{{player.name}}</p>
       </div>
       <h3>
-        Nodig direct vrienden nieuwe uit met deze link
+        Nodig direct nieuwe vrienden uit met deze link
       </h3>
       <h3>
         <span class="color-green">{{'online-wisten.web.app/'+gameService.roomId}}</span>
@@ -22,7 +22,7 @@
       <h3>
           of deel de spelcode <span class="color-green">{{gameService.roomId}}</span>
       </h3>
-      <button class="button-green" mat-raised-button color="primary" (click)="copyCode()">KOPIEER spelcode</button>
+      <button class="button-green" mat-raised-button color="primary" (click)="copyCode()">KOPIEER SPELCODE</button>
     </div>
 </mat-card>
 

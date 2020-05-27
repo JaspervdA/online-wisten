@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GameBoardService } from '../game-board.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-board',
@@ -17,6 +19,10 @@ export class BoardComponent implements OnInit {
     'played-card-top',
     'played-card-right'
   ];
+  leftPlayerWins: Observable<number[]>;
+  topPlayerWins: Observable<number[]>;
+  bottomPlayerWins: Observable<number[]>;
+  rightPlayerWins: Observable<number[]>;
 
   constructor(public gameService: GameBoardService) {}
 
@@ -30,11 +36,21 @@ export class BoardComponent implements OnInit {
     this.leftPlayer = this.gameService.staticPlayers[(myIndex + 1) % 4].name;
     this.topPlayer = this.gameService.staticPlayers[(myIndex + 2) % 4].name;
     this.rightPlayer = this.gameService.staticPlayers[(myIndex + 3) % 4].name;
+
+    this.bottomPlayerWins = this.getWins(myIndex);
+    this.leftPlayerWins = this.getWins((myIndex + 1) % 4);
+    this.topPlayerWins = this.getWins((myIndex + 2) % 4);
+    this.rightPlayerWins = this.getWins((myIndex + 3) % 4);
   }
 
   public getPlayedCardClass(playerIndex: number): string {
-    const styleIndex =
-      (playerIndex - this.gameService.myPlayerIndex + 4) % 4;
+    const styleIndex = (playerIndex - this.gameService.myPlayerIndex + 4) % 4;
     return this.playedCardClasses[styleIndex];
+  }
+
+  private getWins(playerIndex: number) {
+    return this.gameService.winners.pipe(
+      map(winners => winners.filter(winner => winner === playerIndex))
+    );
   }
 }

@@ -1,15 +1,15 @@
 <div class="game-board">
   <div class="left-player">
-    {{leftPlayer}}
+    {{leftPlayer}} - {{(leftPlayerWins | async).length}}
   </div>
   <div class="top-player">
-    {{topPlayer}}
+    {{topPlayer}} - {{(topPlayerWins | async).length}}
   </div>
   <div class="right-player">
-    {{rightPlayer}}
+    {{rightPlayer}} - {{(rightPlayerWins | async).length}}
   </div>
   <div class="bottom-player">
-    <p>{{bottomPlayer}}</p>
+    <p>{{bottomPlayer}} - {{(bottomPlayerWins | async).length}}</p>
     <div class="my-cards">
       <app-card
         *ngFor="let card of gameService.cards | async; let idx = index"
