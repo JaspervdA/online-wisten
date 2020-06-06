@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GameBoardService } from '../game-board.service';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, last } from 'rxjs/operators';
 
 @Component({
   selector: 'app-board',
@@ -23,8 +23,9 @@ export class BoardComponent implements OnInit {
   topPlayerWins: Observable<number[]>;
   bottomPlayerWins: Observable<number[]>;
   rightPlayerWins: Observable<number[]>;
+  lastRoundWinner: any;
 
-  constructor(public gameService: GameBoardService) {}
+  constructor(public gameService: GameBoardService) { }
 
   ngOnInit() {
     this.initPlayerPositions();
@@ -41,6 +42,8 @@ export class BoardComponent implements OnInit {
     this.leftPlayerWins = this.getWins((myIndex + 1) % 4);
     this.topPlayerWins = this.getWins((myIndex + 2) % 4);
     this.rightPlayerWins = this.getWins((myIndex + 3) % 4);
+
+    this.lastRoundWinner = this.gameService.winners.pipe(last())
   }
 
   public getPlayedCardClass(playerIndex: number): string {

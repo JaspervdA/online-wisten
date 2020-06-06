@@ -1,41 +1,46 @@
 <div class="game-board">
-  <div class="left-player">
+  <div class="left-player" [ngClass]="gameService.myPlayerIndex + 1 === lastRoundWinner ? 'winner' : null">
     {{leftPlayer}} - {{(leftPlayerWins | async)?.length}}
   </div>
-  <div class="top-player">
+  <div class="top-player" [ngClass]="gameService.myPlayerIndex + 1 === lastRoundWinner  ? 'winner' : null">
     {{topPlayer}} - {{(topPlayerWins | async)?.length}}
   </div>
-  <div class="right-player">
+  <div class="right-player" [ngClass]="gameService.myPlayerIndex + 1 === lastRoundWinner  ? 'winner' : null">
     {{rightPlayer}} - {{(rightPlayerWins | async)?.length}}
   </div>
-  <div class="bottom-player">
+  <div class="bottom-player" [ngClass]="gameService.myPlayerIndex + 1 === lastRoundWinner  ? 'winner' : null">
     <p>{{bottomPlayer}} - {{(bottomPlayerWins | async)?.length}}</p>
     <div class="my-cards">
-      <app-card
-        *ngFor="let card of gameService.cards | async; let idx = index"
-        [cardValue]="card"
-        [firebaseIndex]="idx"
-        [clickable]="true"
-      >
+      <app-card *ngFor="let card of gameService.cards | async; let idx = index" [cardValue]="card" [firebaseIndex]="idx"
+        [clickable]="true">
       </app-card>
     </div>
   </div>
   <div class="played-cards">
-    <app-card
-      *ngFor="let card of (gameService.playedCards | async); let idx = index"
-      [cardValue]="card"
-      [ngClass]="getPlayedCardClass(idx)"
-    >
+    <app-card *ngFor="let card of (gameService.playedCards | async); let idx = index" [cardValue]="card"
+      [ngClass]="getPlayedCardClass(idx)">
     </app-card>
-    <mat-card class="room-card" *ngIf="gameService.trumpColor === -1">
+    <mat-card *ngIf="gameService.trumpColor === -1">
       <h2>Wat is de troefkaart?</h2>
-      <button class="button-green trump-button" mat-raised-button color="primary" (click)="gameService.setTrumpCard(3)">Harten</button>
-      <button class="button-green trump-button" mat-raised-button color="primary" (click)="gameService.setTrumpCard(2)">Schoppen</button>
-      <button class="button-green trump-button" mat-raised-button color="primary" (click)="gameService.setTrumpCard(1)">Ruiten</button>
-      <button class="button-green trump-button" mat-raised-button color="primary" (click)="gameService.setTrumpCard(0)">Klaveren</button>
+      <button class="button-green trump-button" mat-raised-button color="primary"
+        (click)="gameService.setTrumpCard(3)">Harten</button>
+      <button class="button-green trump-button" mat-raised-button color="primary"
+        (click)="gameService.setTrumpCard(2)">Schoppen</button>
+      <button class="button-green trump-button" mat-raised-button color="primary"
+        (click)="gameService.setTrumpCard(1)">Ruiten</button>
+      <button class="button-green trump-button" mat-raised-button color="primary"
+        (click)="gameService.setTrumpCard(0)">Klaveren</button>
+      <button class="button-green trump-button" mat-raised-button color="primary"
+        (click)="gameService.setTrumpCard(4)">Geen Troef (Miserie)</button>
     </mat-card>
-    <div class="new-round" *ngIf="gameService.startingNewRound">
-      <button class="button-green" mat-raised-button color="primary" (click)="gameService.startNewRound()">VOLGENDE SLAG</button>
-    </div>
+    <mat-card class="next-round" *ngIf="gameService.startingNewRound">
+      <button class="button-green" mat-raised-button color="primary" (click)="gameService.startNewRound()">VOLGENDE
+        SLAG</button>
+    </mat-card>
+  </div>
+  <div class="trump-card" *ngIf="gameService.trumpColor > -1">
+    <h2 *ngIf="gameService.trumpColor < 4" class="color-secondary">Troef</h2>
+    <app-card *ngIf="gameService.trumpColor < 4" [cardValue]="(gameService.trumpColor+1)*13-1"></app-card>
+    <h2 *ngIf="gameService.trumpColor === 4" class="color-secondary">Geen troef</h2>
   </div>
 </div>

@@ -17,7 +17,7 @@ $card-margin: 5px;
 }
 
 .button-green {
-  background-color: green !important;
+  background-color: $color-accent !important;
 }
 
 .full-width {
@@ -25,5 +25,9 @@ $card-margin: 5px;
 }
 
 .color-green {
-  color: green;
+  color: $color-accent;
+}
+
+.color-secondary {
+  color: $color-secondary;
 }

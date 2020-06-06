@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Observable, BehaviorSubject, combineLatest, interval } from 'rxjs';
 import { Game, Player, Room } from './game-board.interface';
@@ -37,7 +38,7 @@ export class GameBoardService {
   public roundId: number = 0;
   public trumpColor: number = -1;
 
-  constructor(private db: AngularFireDatabase) {}
+  constructor(private db: AngularFireDatabase, private router: Router) { }
 
   public createRoom() {
     const newRoom = {
@@ -72,6 +73,7 @@ export class GameBoardService {
 
   public joinRoom(roomId: string) {
     this.roomId = roomId;
+    this.router.navigate([`/${roomId}`])
     this.playersRef = this.db.list(`/rooms/${this.roomId}/players`);
     this.players = this.playersRef.valueChanges();
     this.gameJoined = true;
@@ -139,6 +141,8 @@ export class GameBoardService {
   public playCard(cardValue: number, firebaseIndex: number) {
     if (this.cardPlayed === true) {
       return;
+    } else if (this.trumpColor === -1) {
+      return;
     }
 
     this.uploadPlayedCard(cardValue, firebaseIndex);
@@ -164,6 +168,7 @@ export class GameBoardService {
     if (databaseActiveRound === -1) {
       this.gameId += 1;
       this.roundId = 0;
+      this.trumpColor = -1;
       this.startingNewRound = false;
       this.cardPlayed = false;
       this.gameStarted = false;
@@ -222,7 +227,6 @@ export class GameBoardService {
     // The player that clicks the button starts the new round
     this.games.pipe(take(1)).subscribe((games: Game[]) => {
       const databaseTrumpColor: number = games[this.gameId].trumpColor;
-      console.log(databaseTrumpColor);
 
       if (databaseTrumpColor === -1) {
         this.trumpColor = trumpColor;
@@ -283,7 +287,6 @@ export class GameBoardService {
     playedCards: number[],
     startingPlayer: number
   ) {
-    // let trumpColor: number = 0;
     let startingColor: number;
     let cardStrengths: number[];
 
@@ -291,7 +294,6 @@ export class GameBoardService {
     cardStrengths = playedCards.map((cardValue: number) => {
       return this.getCardStrength(cardValue, this.trumpColor, startingColor);
     });
-
     this.winnersRef.set(`${roundId}`, this.indexOfMax(cardStrengths));
   }
 
